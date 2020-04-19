@@ -193,6 +193,8 @@ class YouTubeProvider extends EnemisYoutubeProvider
     }
 }
 ```
+### 7 troubleshooting guide
+This bundle must go after Sonata Media bundle \ ApplicationSonataMediaBundle otherwise you will get exception: The service "enemis.sonata_media_liip_imagine.chain_resizer" has a dependency on a non-existent service "sonata.media.adapter.image.default".
 
 If you have some question feel free to mail me on stadnikandreypublic@gmail.com. 
 Also you are able to create issues and suggest pull request.
