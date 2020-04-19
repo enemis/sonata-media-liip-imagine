@@ -153,4 +153,13 @@ class YouTubeProvider extends SonataYouTubeProvider
         return $metadata['thumbnails'][0];
     }
 
+    public function preRemove(MediaInterface $media)
+    {
+        parent::preRemove($media);
+        $path = $this->getReferenceImage($media);
+
+        if ($this->getFilesystem()->has($path)) {
+            $this->getFilesystem()->delete($path);
+        }
+    }
 }

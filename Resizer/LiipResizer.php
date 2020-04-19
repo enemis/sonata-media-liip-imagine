@@ -97,7 +97,7 @@ class LiipResizer implements ResizerInterface
     public function getBox(MediaInterface $media, array $settings)
     {
         $filePath = parse_url($settings['path'])['path'];
-        $filePath = $this->rootDir . '/../web' . $filePath;
+        $filePath = $this->rootDir . '/../public' . $filePath;
 
         if (!file_exists($filePath)) {
             $relativePath = parse_url($settings['path'])['path'];

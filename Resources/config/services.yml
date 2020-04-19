@@ -1,9 +1,8 @@
 services:
     enemis.sonata_media_liip_imagine.thumbnail:
         class: Enemis\SonataMediaLiipImagineBundle\Thumbnail\LiipImagineThumbnail
-        arguments: ["@router"]
+        arguments: ["@liip_imagine.cache.manager"]
         calls:
-            - ['setCacheManager', ['@liip_imagine.cache.manager']]
             - ['setFilterSets', ['%liip_imagine.filter_sets%']]
 
     enemis.sonata_media_liip_imagine.liip_resizer:

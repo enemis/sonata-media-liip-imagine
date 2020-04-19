@@ -133,12 +133,13 @@ class LiipIntegrationOptimizeCompiler implements CompilerPassInterface
 
         $liipResizerDefinition = $container->getDefinition('enemis.sonata_media_liip_imagine.liip_resizer');
         $chainResizerDefinition = $container->getDefinition('enemis.sonata_media_liip_imagine.chain_resizer');
+        $alias = $container->getAlias('sonata.media.adapter.image.default');
 
-        $liipResizerDefinition->replaceArgument(0, new Reference('sonata.media.adapter.image.default'));
+        $liipResizerDefinition->replaceArgument(0,  new Reference($alias));
         $liipResizerDefinition->replaceArgument(1, '');
         $liipResizerDefinition->replaceArgument(2, new Reference('sonata.media.metadata.proxy'));
 
-        $chainResizerDefinition->replaceArgument(0, new Reference('sonata.media.adapter.image.default'));
+        $chainResizerDefinition->replaceArgument(0,  new Reference($alias));
         $chainResizerDefinition->replaceArgument(1, '');
         $chainResizerDefinition->replaceArgument(2, new Reference('sonata.media.metadata.proxy'));
         $chainResizerDefinition->addMethodCall('setFilterSets', [$filterSets]);

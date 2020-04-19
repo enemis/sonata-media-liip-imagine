@@ -8,6 +8,7 @@ use Sonata\MediaBundle\Provider\MediaProviderInterface;
 use Sonata\MediaBundle\Thumbnail\ThumbnailInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Throwable;
 
 class LiipImagineThumbnail implements ThumbnailInterface
 {
@@ -29,9 +30,9 @@ class LiipImagineThumbnail implements ThumbnailInterface
     /**
      * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(CacheManager $cacheManager)
     {
-        $this->router = $router;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -91,9 +92,18 @@ class LiipImagineThumbnail implements ThumbnailInterface
      */
     public function delete(MediaProviderInterface $provider, MediaInterface $media, $formats = null)
     {
+        if (\is_string($formats)) {
+            $formats[] = $formats;
+        }
+        if (!$formats) {
+            $formats = \array_keys($provider->getFormats());
+        }
+
         foreach ($formats as $format) {
-            $referencePath = $provider->generatePublicUrl($media, 'reference');
-            $this->cacheManager->remove([$referencePath], [$format]);
+            try {
+                $referencePath = $provider->generatePublicUrl($media, 'reference');
+                $this->cacheManager->remove([$referencePath], [$format]);
+            } catch (Throwable $exception) {}
         }
     }
 }
