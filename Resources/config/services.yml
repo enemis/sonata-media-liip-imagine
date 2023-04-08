@@ -12,6 +12,7 @@ services:
             - ['setRootDir', ['%kernel.root_dir%']]
             - ['setHttpKernel', ['@http_kernel']]
             - ['setRouter', ['@router']]
+            - ['setSession', ['@session']]
 
 
     enemis.sonata_media_liip_imagine.chain_resizer:

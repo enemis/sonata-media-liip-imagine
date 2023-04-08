@@ -12,6 +12,8 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -46,6 +48,8 @@ class LiipResizer implements ResizerInterface
      * @var string
      */
     protected $rootDir;
+
+    private ?Session $session;
 
     /**
      * @param ImagineInterface         $adapter
@@ -83,6 +87,11 @@ class LiipResizer implements ResizerInterface
         $this->httpKernel = $httpKernel;
     }
 
+    public function getSession(): ?SessionInterface
+    {
+        return $this->session;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -106,6 +115,7 @@ class LiipResizer implements ResizerInterface
             $subRequest->attributes->set('_controller', $matched['_controller']);
             $subRequest->attributes->set('filter', $matched['filter']);
             $subRequest->attributes->set('_route', $matched['_route']);
+            $subRequest->setSession($this->session);
             if (isset($matched['_locale'])) {
                 $subRequest->attributes->set('_locale', $matched['_locale']);
             }
