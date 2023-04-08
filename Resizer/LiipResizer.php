@@ -87,9 +87,9 @@ class LiipResizer implements ResizerInterface
         $this->httpKernel = $httpKernel;
     }
 
-    public function getSession(): ?SessionInterface
+    public function setSession(?Session $session): void
     {
-        return $this->session;
+        $this->session = $session;
     }
 
     /**
